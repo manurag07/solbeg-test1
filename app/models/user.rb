@@ -9,10 +9,18 @@ class User < ApplicationRecord
 	## association macros
 	has_one :profile, dependent: :destroy
 
+	has_many :blogs,  dependent: :destroy
+
+	has_many :comments,  dependent: :destroy
+
 	accepts_nested_attributes_for :profile
 
 	## validation macros
 	validates :name, :email, length: { maximum: 255 }, allow_blank: false
+
+	def self.find_name(id)
+		User.find(id).name
+	end
 
 	## callbacks
 

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  	root to: 'home#index'
+  root to: 'home#index'
+
+  post 'comments/create'
+  resources :blogs
 
 	devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
 

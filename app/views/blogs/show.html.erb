@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tittle:</strong>
+  <%= @blog.tittle %>
+</p>
+
+<p>
+  <strong>Descriptions:</strong>
+  <%= @blog.descriptions %>
+</p>
+
+<% if current_user.id == @blog.user_id%>
+  <%= link_to 'Edit', edit_blog_path(@blog) %>
+  <%= link_to 'Send to All user', ''%>
+<%end%><br />
+
+<h3>Add Comment </h3>
+ <%= form_with url: '/comments/create' do |form| %>
+    <%= form.text_field :comment %>
+    <%= form.hidden_field :blog_id, value: @blog.id%>
+    <%= form.hidden_field :user_id, value: current_user.id%>
+    <%= form.submit 'Add Comment' %>
+  <% end %><br />
+
+
+<%if @blog.comments.present?%>
+  <h3>All Comments</h3>
+  <% @blog.comments.each do |com| %>
+    <%= text_field "comment_list", 'name', value: com.comment, disabled: true %> by
+    <%= User.find_name(com.user_id)%>
+
+    <br /><br />
+  <%end%>
+<%end%>
+
+<%= link_to 'Back', blogs_path %>
